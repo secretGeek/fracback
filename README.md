@@ -15,14 +15,3 @@ a recent version of Visual Studio.
 
 It loaded first time, no problem. So I'm publishing it now, 10 minutes later.
 
-=====
-
-I have realised that the app relies on a bunch of libraries (IronPython,
-AForge etc) and these dependencies are *not* brought in via Nuget, or any
-package solution. Instead I just placed the DLL's locally, in a relative
-folder -- and checked those binaries into "Codeplex". Wow. That explains
-why it "just worked" -- but it's not how things are done now.
-
-I didn't  check those binaries into git -- I may not have redistribution
-rights for one thing. I'll see if it can be built with nuget refs instead.
- 
