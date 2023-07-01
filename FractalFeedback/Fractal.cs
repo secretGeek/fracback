@@ -3,6 +3,7 @@ using System.Drawing.Imaging;
 using System.Windows.Forms;
 using System;
 using System.Diagnostics;
+using AForge.Imaging.Filters;
 
 namespace FractalFeedback
 {
@@ -12,8 +13,9 @@ namespace FractalFeedback
         public Fractal()
         {
             InitializeComponent();
-            if (this.model == null) {
-              this.model = new Model();
+            if (this.model == null)
+            {
+                this.model = new Model();
             }
         }
 
@@ -32,7 +34,7 @@ namespace FractalFeedback
                 int chromeWidth = this.Width - pictureBox1.Width;
                 float scaleX = model.scaleXSeed + (float)random.Next(model.scaleXRandomMin, model.scaleXRandomMax) / model.scaleXRandomDivisor;
                 float scaleY = model.scaleYSeed + (float)random.Next(model.scaleYRandomMin, model.scaleYRandomMax) / model.scaleYRandomDivisor;
-                pictureBox1.Image = ScreenShot(pictureBox1.Width, pictureBox1.Height, this.Location.X + chromeWidth, this.Location.Y + chromeHeight, this.ClientRectangle.Size, scaleX, scaleY);
+                pictureBox1.Image = F(ScreenShot(pictureBox1.Width, pictureBox1.Height, this.Location.X + chromeWidth, this.Location.Y + chromeHeight, this.ClientRectangle.Size, scaleX, scaleY));
             }
             catch (Exception ex1)
             {
@@ -59,7 +61,7 @@ namespace FractalFeedback
             if (firstTime)
             {
                 screenShotBMP = new Bitmap(width,
-                    height, PixelFormat.Format24bppRgb );
+                    height, PixelFormat.Format24bppRgb);
 
                 using (Graphics screenShotGraphics = Graphics.FromImage(screenShotBMP))
                 {
@@ -90,8 +92,9 @@ namespace FractalFeedback
                 if (this.downY != null)
                     Dot(this.downX.Value - radius, this.downY.Value - radius, radius * 2, g);
 
-               // if (this.moveY != null)
-               //     Dot(this.moveX.Value - radius, this.moveY.Value - radius, radius * 2, g);
+
+                // if (this.moveY != null)
+                //     Dot(this.moveX.Value - radius, this.moveY.Value - radius, radius * 2, g);
             }
 
             return result;
@@ -124,6 +127,77 @@ namespace FractalFeedback
         {
             moveX = e.X;
             moveY = e.Y;
+        }
+
+        FiltersSequence filters = null;
+
+        public Bitmap F(Bitmap screenshot)
+        {
+            if (filters == null)
+            {
+                filters = new FiltersSequence();
+
+                foreach (var f in model.Filters)
+                {
+                    filters.Add(CreateFilter(f.Id));
+                }
+
+                // create filters sequence
+                Debug.WriteLine(filters.Count);
+
+            }
+            //return screenshot;
+            return filters.Apply(screenshot);
+        }
+
+        private IFilter CreateFilter(string id)
+        {
+            switch(id)
+            {
+                case "Edges": return new Edges();
+                case "Erosion": return new Erosion();
+                case "ExtractChannel": return new ExtractChannel();
+                case "GaussianBlur": return new GaussianBlur();
+                case "GaussianSharpen": return new GaussianSharpen();
+                case "AdaptiveSmoothing": return new AdaptiveSmoothing();
+                case "AdditiveNoise": return new AdditiveNoise();
+                case "BlobsFiltering": return new BlobsFiltering();
+                case "Blur": return new Blur();
+                case "BrightnessCorrection": return new BrightnessCorrection();
+                case "OilPainting": return new OilPainting();
+                case "ChannelFiltering": return new ChannelFiltering();
+                case "Closing": return new Closing();
+                case "ColorFiltering": return new ColorFiltering();
+                case "Sepia": return new Sepia();
+                case "Dilatation": return new Dilatation();
+                case "RotateChannels": return new RotateChannels();
+                case "Sharpen": return new Sharpen();
+                case "HueModifier": return new HueModifier();
+                case "ContrastStretch": return new ContrastStretch();
+                case "YCbCrFiltering": return new YCbCrFiltering();
+                case "TopHat": return new TopHat();
+                case "PointedColorFloodFill": return new PointedColorFloodFill();
+                case "Opening": return new Opening();
+                case "PointedMeanFloodFill": return new PointedMeanFloodFill();
+                case "SaturationCorrection": return new SaturationCorrection();
+                case "SaltAndPepperNoise": return new SaltAndPepperNoise();
+                case "SimplePosterization": return new SimplePosterization();
+                case "YCbCrExtractChannel": return new YCbCrExtractChannel();
+                case "YCbCrLinear": return new YCbCrLinear();
+                case "ConservativeSmoothing": return new ConservativeSmoothing();
+                case "HSLFiltering": return new HSLFiltering();
+                case "HSLLinear": return new HSLLinear();
+                case "LevelsLinear": return new LevelsLinear();
+                case "Mean": return new Mean();
+                case "Median": return new Median();
+                case "ConnectedComponentsLabeling": return new ConnectedComponentsLabeling();
+                case "HistogramEqualization": return new HistogramEqualization();
+                case "Jitter": return new Jitter();
+                case "Shrink": return new Shrink();
+                case "WaterWave": return new WaterWave();
+                case "Invert": return new Invert();
+            }
+            return null;
         }
     }
 }

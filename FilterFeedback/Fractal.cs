@@ -1,13 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
 using System.Diagnostics;
+using System.Drawing;
 using System.Drawing.Imaging;
+using System.Windows.Forms;
 
 namespace FilterFeedback
 {
@@ -44,7 +39,6 @@ namespace FilterFeedback
                 //Snap!! (and bury)
                 Debug.WriteLine(ex1.ToString());
             }
-
         }
 
         AForge.Imaging.Filters.FiltersSequence filter = null;
@@ -215,27 +209,18 @@ namespace FilterFeedback
         }
 
 
-        //bool firstTime = true;
         public Bitmap ScreenShot(int width, int height, int x, int y, Size size, float scaleX, float scaleY)
         {
             Bitmap screenShotBMP;
-            //if (firstTime)
-            {
-                screenShotBMP = new Bitmap(width,
-                    height, PixelFormat.Format24bppRgb);
+            screenShotBMP = new Bitmap(width,
+                height, PixelFormat.Format24bppRgb);
 
-                using (Graphics screenShotGraphics = Graphics.FromImage(screenShotBMP))
-                {
-                    screenShotGraphics.CopyFromScreen(x,
-                        y, 0, 0, size,
-                        CopyPixelOperation.SourceCopy);
-                }
-                //    firstTime = false;
+            using (Graphics screenShotGraphics = Graphics.FromImage(screenShotBMP))
+            {
+                screenShotGraphics.CopyFromScreen(x,
+                    y, 0, 0, size,
+                    CopyPixelOperation.SourceCopy);
             }
-            //else
-            //{
-            //    screenShotBMP = new Bitmap(this.BackgroundImage);
-            //}
             return ResizeBitmap(screenShotBMP, (int)(width * scaleX), (int)(height * scaleY), width, height);
         }
 
@@ -266,6 +251,5 @@ namespace FilterFeedback
         {
             Snap();
         }
-
     }
 }

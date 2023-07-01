@@ -42,19 +42,19 @@ namespace PythonFeedback
                         Debug.WriteLine(ex.ToString());
                     }
                 }
-                int chromeWidth = (this.Width - this.ClientRectangle.Width)/2;
+                int chromeWidth = (this.Width - this.ClientRectangle.Width) / 2;
                 int chromeHeight = (this.Height - this.ClientRectangle.Height - chromeWidth);
-                
+
                 float scaleX = model.scaleXSeed;
                 float scaleY = model.scaleYSeed;
 
 
-                this.BackgroundImage = ScreenShot(this.ClientRectangle.Width, 
-                                                this.ClientRectangle.Height, 
-                                                this.Location.X + chromeWidth, 
-                                                this.Location.Y + chromeHeight, 
-                                                this.ClientRectangle.Size, 
-                                                scaleX, 
+                this.BackgroundImage = ScreenShot(this.ClientRectangle.Width,
+                                                this.ClientRectangle.Height,
+                                                this.Location.X + chromeWidth,
+                                                this.Location.Y + chromeHeight,
+                                                this.ClientRectangle.Size,
+                                                scaleX,
                                                 scaleY);
 
             }
@@ -78,28 +78,19 @@ namespace PythonFeedback
                 1, 1);
         }
 
-
-        //bool firstTime = true;
         public Bitmap ScreenShot(int width, int height, int x, int y, Size size, float scaleX, float scaleY)
         {
             Bitmap screenShotBMP;
-            //if (firstTime)
-            {
-                screenShotBMP = new Bitmap(width,
-                    height, PixelFormat.Format24bppRgb);
+            screenShotBMP = new Bitmap(width,
+                height, PixelFormat.Format24bppRgb);
 
-                using (Graphics screenShotGraphics = Graphics.FromImage(screenShotBMP))
-                {
-                    screenShotGraphics.CopyFromScreen(x,
-                        y, 0, 0, size,
-                        CopyPixelOperation.SourceCopy);
-                }
-                //    firstTime = false;
+            using (Graphics screenShotGraphics = Graphics.FromImage(screenShotBMP))
+            {
+                screenShotGraphics.CopyFromScreen(x,
+                    y, 0, 0, size,
+                    CopyPixelOperation.SourceCopy);
             }
-            //else
-            //{
-            //    screenShotBMP = new Bitmap(this.BackgroundImage);
-            //}
+
             return ResizeBitmap(screenShotBMP, (int)(width * scaleX), (int)(height * scaleY), width, height);
         }
 

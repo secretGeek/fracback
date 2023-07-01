@@ -1,4 +1,4 @@
-﻿using Microsoft.Scripting.Hosting;
+﻿using System.Collections.Generic;
 
 namespace FractalFeedback
 {
@@ -22,9 +22,12 @@ namespace FractalFeedback
         public int dotRadiusMax { get; set; }
         public int brushWidth { get; set; }
         public int rotateAngle { get; set; }
+
+        public List<ImageFilter> Filters { get; set; }
         //public int scaleY { get; set; }
         public Model()
         {
+            this.Filters = new List<ImageFilter>();
             this.scaleXSeed = 1.0f;
             this.scaleXRandomMin = 0;
             this.scaleXRandomMax = 1000;
