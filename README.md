@@ -1,16 +1,28 @@
 # Fractal Feedback Machine
 
-This is something I wrote long ago, and published to codeplex.
+This is something I wrote long ago, and published to "Codeplex".
 Codeplex was eventually archived. Then they deleted their archive.
 Nasty business.
 
 When this was written, the .net world was excited that "Iron Python"
-a new and dynamic language has been added to the fleet of langs.
+a new and dynamic language had been added to the fleet of langs.
 
-I only used IronPython this one, to make a weird dynamic feedback 
+I only used IronPython this once, to make a weird dynamic feedback 
 thing. I don't think anyone else ever used it.
 
 Cut to 47 years later, and I tried reloading that old project in
 a recent version of Visual Studio. 
 
 It loaded first time, no problem. So I'm publishing it now, 10 minutes later.
+
+=====
+
+I have realised that the app relies on a bunch of libraries (IronPython,
+AForge etc) and these dependencies are *not* brought in via Nuget, or any
+package solution. Instead I just placed the DLL's locally, in a relative
+folder -- and checked those binaries into "Codeplex". Wow. That explains
+why it "just worked" -- but it's not how things are done now.
+
+I didn't  check those binaries into git -- I may not have redistribution
+rights for one thing. I'll see if it can be built with nuget refs instead.
+ 
