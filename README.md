@@ -1,5 +1,7 @@
 # Fractal Feedback Machine
 
+![fractal feedback screenshot](fracback.png)
+
 This is something I wrote long ago, and published to "Codeplex".
 Codeplex was eventually archived. Then they deleted their archive.
 Nasty business.
